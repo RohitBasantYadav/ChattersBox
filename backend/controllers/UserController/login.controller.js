@@ -11,13 +11,11 @@ const login = async (req, res) => {
                 bcrypt.compare(password, user.password, function (err, result) {
                     if (result) {
                         const accessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET_KEY, { expiresIn: '1d' });
-                        // const refreshToken = jwt.sign({ userId:user._id }, process.env.REFRESH_TOKEN_SECRET_KEY,{expiresIn:'1d'});
                         res.status(200).cookie("accessToken", accessToken, { maxAge: 1 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'strict', secure: true }).json({
-                            name:user.fullname, 
-                            username:user.username, 
-                            profilePic:user.profilePic
+                            name: user.fullname,
+                            username: user.username,
+                            profilePic: user.profilePic
                         })
-                        // res.status(200).json({msg:`AccessToken:${accessToken}, RefreshToken:${refreshToken}`})
                     } else {
                         res.status(400).json({ msg: `Incorrect Password ${err}` })
                     }
