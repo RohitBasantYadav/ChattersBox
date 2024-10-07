@@ -5,6 +5,7 @@ const register = async (req, res) => {
     const { fullname, username, gender, password, profilePic } = req.body;
     try {
         if (fullname && username && gender && password) {
+            let profileUrl = `https://avatar.iran.liara.run/username?username=${fullname}`
             const userRegistered = await UserModel.findOne({ username })
             if (userRegistered) {
                 res.status(200).json({ msg: "User Already present please login" })
@@ -14,7 +15,7 @@ const register = async (req, res) => {
                     if(err){
                         res.status(400).json({msg:`Error while hashing the password, ${err}`})
                     }else{
-                        const registerUser = new UserModel({ fullname, username, gender, password:hash, profilePic })
+                        const registerUser = new UserModel({ fullname, username, gender, password:hash, profilePic:profileUrl })
                         await registerUser.save();
                         res.status(201).json({msg:`User Regitered Successfully`})
                     }

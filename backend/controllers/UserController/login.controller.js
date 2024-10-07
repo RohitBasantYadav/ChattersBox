@@ -17,7 +17,7 @@ const login = async (req, res) => {
                             profilePic: user.profilePic
                         })
                     } else {
-                        res.status(400).json({ msg: `Incorrect Password ${err}` })
+                        res.status(400).json({ msg: `Incorrect Password ${err}`})
                     }
                 });
             } else {
